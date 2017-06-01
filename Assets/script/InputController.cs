@@ -10,6 +10,7 @@ public class InputController : MonoBehaviour
     {
         if (GamePlay.CurrentState != GamePlay.State.Playing) return;
 
+
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space))
         {
             GamePlay.CurrentBrick.Rotate();
@@ -18,12 +19,21 @@ public class InputController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            GamePlay.CurrentBrick.MoveLeft();
+            int posX = GamePlay.CurrentBrick.PositionX;
+            posX -= 1;
+            GamePlay.CurrentBrick.PositionX = Mathf.Clamp(posX, -GamePlay.FieldWidth / 2, +GamePlay.FieldWidth / 2);
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            GamePlay.CurrentBrick.MoveRight();
+            int posX = GamePlay.CurrentBrick.PositionX;
+            posX += 1;
+            GamePlay.CurrentBrick.PositionX = Mathf.Clamp(posX, -GamePlay.FieldWidth / 2, +GamePlay.FieldWidth / 2);
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            GamePlay.CurrentBrick.PositionY -= 1;
         }
 
 

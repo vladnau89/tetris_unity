@@ -18,7 +18,27 @@ public class Brick : MonoBehaviour
         }
     }
 
+    public int PositionX
+    {
+        get { return (int)this.transform.position.x; }
+        set
+        {
+            var position = this.transform.position;
+            position.x = value;
+            this.transform.position = position;
+        }
+    }
 
+    public int PositionY
+    {
+        get { return (int)this.transform.position.y; }
+        set
+        {
+            var position = this.transform.position;
+            position.y = value;
+            this.transform.position = position;
+        }
+    }
     
     [SerializeField] private GameObject[] bricks = new GameObject[16];
 
@@ -51,21 +71,6 @@ public class Brick : MonoBehaviour
         ushort maskNext = _settings.rotationMasks[_maskIndex % _settings.rotationMasks.Length];
         Repaint(maskNext);
     }
-
-    public void MoveLeft()
-    {
-        var position = this.transform.position;
-        position.x -= 1;
-        this.transform.position = position;
-    }
-
-    public void MoveRight()
-    {
-        var position = this.transform.position;
-        position.x += 1;
-        this.transform.position = position;
-    }
-
 
     private void OnDrawGizmos()
     {

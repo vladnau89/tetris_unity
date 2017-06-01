@@ -11,12 +11,14 @@ public class GamePlay : SingletonMonoBehaviour<GamePlay>
         GameOver
     }
 
+    [SerializeField] private int _fieldWidth = 10;
 
     private State _currentState;
     private Brick _currentBrick;
 
-    public static State CurrentState { get { return Instance._currentState; } }
-    public static Brick CurrentBrick { get { return Instance._currentBrick; } }
+    public static State CurrentState    { get { return Instance._currentState;      } }
+    public static Brick CurrentBrick    { get { return Instance._currentBrick;      } }
+    public static int   FieldWidth      { get { return Instance._fieldWidth;        } }
 
     private void Awake()
     {
