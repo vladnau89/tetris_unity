@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BrickGenerator : SingletonMonoBehaviour<BrickGenerator>
 {
-    [SerializeField] private Brick[] brickPrefabs;
+    [SerializeField] private BrickSettings[]    brickSettings;
+    [SerializeField] private Brick              brickPrefab;
 
 
     public static Brick GenerateNext()
@@ -14,9 +15,24 @@ public class BrickGenerator : SingletonMonoBehaviour<BrickGenerator>
 
     private Brick _GenerateNext()
     {
-        var brick = Instantiate(brickPrefabs[UnityEngine.Random.Range(0, brickPrefabs.Length)]);
-        Debug.LogError("Generate " + brick.name);
+        var brick = Instantiate(brickPrefab);
+
+        BrickSettings settings = GetRandomSettings();
+        int indexMask = RandomMaskIndex(settings);
+        brick.Apply(settings, indexMask);
+
         return brick;
     }
+
+    private static int RandomMaskIndex(BrickSettings settings)
+    {
+        return Random.Range(0, settings.rotationMasks.Length);
+    }
+
+    private BrickSettings GetRandomSettings()
+    {
+        return brickSettings[UnityEngine.Random.Range(0, brickSettings.Length)];
+    }
+
 
 }
