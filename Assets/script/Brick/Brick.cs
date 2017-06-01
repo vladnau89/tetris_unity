@@ -53,15 +53,6 @@ public class Brick : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space))
-        {
-            Rotate();
-        }
-    }
-
-
     private void OnDrawGizmos()
     {
         for (int i = 0; i < bricks.Length; i++)

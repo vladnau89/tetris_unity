@@ -13,8 +13,10 @@ public class GamePlay : SingletonMonoBehaviour<GamePlay>
 
 
     private State _currentState;
+    private Brick _currentBrick;
 
     public static State CurrentState { get { return Instance._currentState; } }
+    public static Brick CurrentBrick { get { return Instance._currentBrick; } }
 
     private void Awake()
     {
@@ -35,8 +37,7 @@ public class GamePlay : SingletonMonoBehaviour<GamePlay>
                 break;
             case State.Playing:
 
-                var brick = BrickGenerator.GenerateNext();
-
+                _currentBrick = BrickGenerator.GenerateNext();
 
                 break;
             case State.GameOver:
