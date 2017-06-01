@@ -52,6 +52,20 @@ public class Brick : MonoBehaviour
         Repaint(maskNext);
     }
 
+    public void MoveLeft()
+    {
+        var position = this.transform.position;
+        position.x -= 1;
+        this.transform.position = position;
+    }
+
+    public void MoveRight()
+    {
+        var position = this.transform.position;
+        position.x += 1;
+        this.transform.position = position;
+    }
+
 
     private void OnDrawGizmos()
     {

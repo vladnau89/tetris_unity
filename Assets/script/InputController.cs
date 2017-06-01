@@ -14,6 +14,19 @@ public class InputController : MonoBehaviour
         {
             GamePlay.CurrentBrick.Rotate();
         }
+
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            GamePlay.CurrentBrick.MoveLeft();
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            GamePlay.CurrentBrick.MoveRight();
+        }
+
+
     }
 
 }
