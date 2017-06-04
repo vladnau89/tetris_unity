@@ -5,19 +5,6 @@ using System;
 
 public class Brick : MonoBehaviour
 {
-    private string _name;
-    public new string name
-    {
-        get
-        {
-            if (string.IsNullOrEmpty(_name))
-            {
-                _name = base.name = base.name.Replace("(Clone)", "");
-            }
-            return _name;
-        }
-    }
-
     public int PositionX
     {
         get { return (int)this.transform.position.x; }
@@ -45,7 +32,6 @@ public class Brick : MonoBehaviour
     private BrickSettings _settings;
     private int _maskIndex;
 
-
     public void Apply(BrickSettings settings, int maskIndex)
     {
         _settings = settings;
@@ -54,6 +40,8 @@ public class Brick : MonoBehaviour
         ushort mask = settings.rotationMasks[maskIndex];
 
         Repaint(mask);
+
+        base.name = settings.name;
     }
 
     private void Repaint(ushort mask)
@@ -65,6 +53,7 @@ public class Brick : MonoBehaviour
         }
     }
 
+    [ContextMenu("Rotate")]
     public void Rotate()
     {
         ++_maskIndex;
