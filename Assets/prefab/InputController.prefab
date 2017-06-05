@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4523535933874308}
   - component: {fileID: 114181900575689316}
+  - component: {fileID: 114507803828868854}
   m_Layer: 0
   m_Name: InputController
   m_TagString: Untagged
@@ -49,5 +50,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15cbc4ff0dafecb4ea47f1268a60403d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _horizontalAxe: Horizontal
+  _verticalAxe: Vertical
+  actionsPerSeconds: 10
+--- !u!114 &114507803828868854
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481431526862578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed0237ed46fa3dc44a45db236cc1c163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
