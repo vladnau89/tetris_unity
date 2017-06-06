@@ -54,7 +54,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _horizontalAxe: Horizontal
   _verticalAxe: Vertical
-  actionsPerSeconds: 10
+  settings:
+  - direction: 0
+    actionPerSeconds: 10
+    oneShotOnly: 0
+  - direction: 1
+    actionPerSeconds: 0
+    oneShotOnly: 1
+  - direction: 2
+    actionPerSeconds: 10
+    oneShotOnly: 0
+  - direction: 3
+    actionPerSeconds: 20
+    oneShotOnly: 0
 --- !u!114 &114507803828868854
 MonoBehaviour:
   m_ObjectHideFlags: 1

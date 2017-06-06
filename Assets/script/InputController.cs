@@ -6,15 +6,21 @@ using UnityEngine.EventSystems;
 
 public class InputController : MonoBehaviour
 {
-    public static event Action<MoveDirection> OnChangeDirection;
+    [Serializable]
+    public class DirectionSetting
+    {
+        public MoveDirection direction;
+        public int actionPerSeconds = 10;
+        public bool oneShotOnly = false;
+    }
 
+    public static event Action<MoveDirection> OnChangeDirection;
 
     const float DEAD_ZONE = 0.6f;
 
     [SerializeField] private string _horizontalAxe  = "Horizontal";
     [SerializeField] private string _verticalAxe    = "Vertical";
-
-    [SerializeField] private int _actionsPerSeconds = 10;
+    [SerializeField] private DirectionSetting[] settings;
 
     private MoveDirection _prevDirection;
     private float _prevTime;
@@ -30,22 +36,20 @@ public class InputController : MonoBehaviour
 
         if (direction != MoveDirection.None)
         {
+            DirectionSetting setting = settings[(int)direction];
             float time = Time.unscaledTime;
 
             if (_prevDirection == direction)
             {              
-                bool allow = time > _prevTime + 1f / _actionsPerSeconds;
+                bool allow = setting.oneShotOnly == false && time > _prevTime + 1f / setting.actionPerSeconds;
 
                 if (!allow) return;
             }
 
             _prevTime = time;
-            //MoveBrick(direction);
 
             if (OnChangeDirection != null) OnChangeDirection(direction);
-
         }
-
         _prevDirection = direction;
     }
 
