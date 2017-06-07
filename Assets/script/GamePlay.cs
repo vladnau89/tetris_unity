@@ -11,16 +11,13 @@ public class GamePlay : SingletonMonoBehaviour<GamePlay>
         GameOver
     }
 
-    [SerializeField] private int _fieldWidth = 10;
-    [SerializeField] private int _fieldHeight = 20;
 
     private State _currentState;
     private Brick _currentBrick;
 
     public static State CurrentState    { get { return Instance._currentState;      } }
     public static Brick CurrentBrick    { get { return Instance._currentBrick;      } }
-    public static int   FieldWidth      { get { return Instance._fieldWidth;        } }
-    public static int   FieldHeight     { get { return Instance._fieldHeight;       } }
+
 
     private void Awake()
     {
@@ -40,7 +37,9 @@ public class GamePlay : SingletonMonoBehaviour<GamePlay>
                 break;
             case State.Playing:
 
-                _currentBrick = BrickGenerator.GenerateNext(_fieldHeight / 2);
+                var x = CellMatrix.Width / 2;
+                var y = 0;
+                _currentBrick = BrickGenerator.GenerateNext(x , y);
 
                 break;
             case State.GameOver:

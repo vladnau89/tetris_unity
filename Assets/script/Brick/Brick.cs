@@ -7,23 +7,23 @@ public class Brick : MonoBehaviour
 {
     public int PositionX
     {
-        get { return (int)this.transform.position.x; }
+        get { return (int)this.transform.localPosition.x; }
         set
         {
-            var position = this.transform.position;
+            var position = this.transform.localPosition;
             position.x = value;
-            this.transform.position = position;
+            this.transform.localPosition = position;
         }
     }
 
     public int PositionY
     {
-        get { return (int)this.transform.position.y; }
+        get { return (int)this.transform.localPosition.y; }
         set
         {
-            var position = this.transform.position;
+            var position = this.transform.localPosition;
             position.y = value;
-            this.transform.position = position;
+            this.transform.localPosition = position;
         }
     }
     

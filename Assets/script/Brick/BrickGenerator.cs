@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class BrickGenerator : SingletonMonoBehaviour<BrickGenerator>
 {
+    [SerializeField] private Transform          pivot;
     [SerializeField] private BrickSettings[]    brickSettings;
     [SerializeField] private Brick              brickPrefab;
 
 
-    public static Brick GenerateNext(int yPos)
+    public static Brick GenerateNext(int xPos, int yPos)
     {        
-        return Instance._GenerateNext(yPos);
+        return Instance._GenerateNext(xPos, yPos);
     }
 
-    private Brick _GenerateNext(int yPos)
+    private Brick _GenerateNext(int xPos, int yPos)
     {
-        var brick = Instantiate(brickPrefab, new Vector3(0, yPos, 0), Quaternion.identity);
+        var brick = Instantiate(brickPrefab);
+
+        brick.transform.parent = pivot;
+
+        brick.transform.localPosition = new Vector3(xPos, yPos, 0);
+        brick.transform.localRotation = Quaternion.identity;
 
         BrickSettings settings = GetRandomBrickSetting();
         int indexMask = RandomRotationMaskIndex(settings);
