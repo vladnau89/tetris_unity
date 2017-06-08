@@ -82,9 +82,34 @@ public class Brick : MonoBehaviour
         return false;
     }
 
+    public bool TryRotate()
+    {
+        var mask_temp = _maskIndex + 1;
+        ushort maskNext = _settings.rotationMasks[mask_temp % _settings.rotationMasks.Length];
+
+        List<Vector2> newPartPositions = new List<Vector2>();
+        for (int i = 0; i < bricks.Length; i++)
+        {
+            bool active = Convert.ToBoolean(maskNext & 1 << i);
+            if (active)
+            {
+                newPartPositions.Add(bricks[i].transform.position);
+            }
+        }
+
+        if (CellMatrix.IsCellsAvailable(newPartPositions))
+        {
+            ++_maskIndex;
+            Repaint(maskNext);
+            return true;
+        }
+
+        return false;
+    }
+
 
     [ContextMenu("Rotate")]
-    public void Rotate()
+    private void Rotate()
     {
         ++_maskIndex;
         ushort maskNext = _settings.rotationMasks[_maskIndex % _settings.rotationMasks.Length];

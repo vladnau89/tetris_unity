@@ -41,7 +41,7 @@ public class BrickMovementController : MonoBehaviour {
         }
         else if (direction == MoveDirection.Up)
         {
-            GamePlay.CurrentBrick.Rotate();
+            GamePlay.CurrentBrick.TryRotate();
         }
     }
 
