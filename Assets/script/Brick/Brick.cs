@@ -55,64 +55,68 @@ public class Brick : MonoBehaviour
 
     public bool TryMove(int x, int y)
     {
+        bool rotate = false;
+        return TryTranslate(x, y, rotate);
+    }
+
+    public bool TryRotate()
+    {
+        // don`t change position
+        int x = PositionX;
+        int y = PositionY;
+        bool rotate = true;
+        return TryTranslate(x, y, rotate);
+    }
+
+    private bool TryTranslate(int x, int y, bool rotate)
+    {
+        // increment index if rotate = true
+        int mask_index_next = (_maskIndex + Convert.ToInt32(rotate)) % _settings.rotationMasks.Length;
+        ushort mask = _settings.rotationMasks[mask_index_next];
         int dx = x - PositionX;
         int dy = y - PositionY;
 
-        List<Vector2> newPartPositions = new List<Vector2>();
+        List<Vector2> newBricksPositions = GetNewBricksPosition(mask, dx, dy);
 
-        for (int i = 0; i < bricks.Length; i++)
+        if (CellMatrix.IsCellsAvailable(newBricksPositions))
         {
-            var brick = bricks[i];
-            if (brick.activeSelf)
+            if (dx != 0) PositionX = x;
+            if (dy != 0) PositionY = y;
+
+            if (_maskIndex != mask_index_next)
             {
-                Vector2 partPosition = brick.transform.position;
-                partPosition.x += dx;
-                partPosition.y += dy;
-                newPartPositions.Add(partPosition);
-            }
-        }
-
-        if (CellMatrix.IsCellsAvailable(newPartPositions))
-        {
-            PositionX = x;
-            PositionY = y;
+                Repaint(mask);
+                _maskIndex = mask_index_next;
+            }           
             return true;
         }
 
         return false;
     }
 
-    public bool TryRotate()
-    {
-        var mask_temp = _maskIndex + 1;
-        ushort maskNext = _settings.rotationMasks[mask_temp % _settings.rotationMasks.Length];
 
-        List<Vector2> newPartPositions = new List<Vector2>();
+    private List<Vector2> GetNewBricksPosition(ushort maskNext, int dx, int dy)
+    {
+        List<Vector2> newBricksPositions = new List<Vector2>();
         for (int i = 0; i < bricks.Length; i++)
         {
             bool active = Convert.ToBoolean(maskNext & 1 << i);
             if (active)
             {
-                newPartPositions.Add(bricks[i].transform.position);
+                Vector2 partPosition = bricks[i].transform.position;
+                partPosition.x += dx;
+                partPosition.y += dy;
+                newBricksPositions.Add(partPosition);
             }
         }
-
-        if (CellMatrix.IsCellsAvailable(newPartPositions))
-        {
-            ++_maskIndex;
-            Repaint(maskNext);
-            return true;
-        }
-
-        return false;
+        return newBricksPositions;
     }
-
 
     [ContextMenu("Rotate")]
     private void Rotate()
     {
-        ++_maskIndex;
-        ushort maskNext = _settings.rotationMasks[_maskIndex % _settings.rotationMasks.Length];
+        _maskIndex = (_maskIndex + 1) % _settings.rotationMasks.Length;
+        ushort maskNext = _settings.rotationMasks[_maskIndex];
         Repaint(maskNext);
     }
 
