@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class CellMatrix : SingletonMonoBehaviour<CellMatrix>
+public sealed class CellMatrix : SingletonMonoBehaviour<CellMatrix>
 {
     [Serializable]
-    public class Cell
+    public sealed class Cell
     {
         public int x;
         public int y;
@@ -29,10 +29,8 @@ public class CellMatrix : SingletonMonoBehaviour<CellMatrix>
             for (int j = 0; j < _width; j++)
             {
                 cells[i * _width + j] = new Cell { x = j, y = -i, isFilled = false };
-
             }
         }
-
     }
 
     private void OnDrawGizmos()
@@ -56,5 +54,54 @@ public class CellMatrix : SingletonMonoBehaviour<CellMatrix>
            
         }
     }
+
+
+    private static bool IsCellAvailable(int x , int y)
+    {
+        int y_invert = -y;
+        if (x < 0 || x >= Width) return false;
+        if (y_invert < 0 || y_invert >= Height) return false;
+        return Instance.cells[x + (-y * Width)].isFilled == false;
+    }
+
+
+    private static bool TryToFillCell(int x, int y)
+    {
+        var cell = Instance.cells[x + (-y * Width)];
+        if (cell.isFilled)
+        {
+            return false;
+        }
+        cell.isFilled = true;
+        return true;
+    }
+
+    public static bool TryToFillCell(List<Vector2> positions)
+    {
+        if (!IsCellsAvailable(positions))
+        {
+            return false;
+        }
+        for (int i = 0; i < positions.Count; i++)
+        {
+            var pos = positions[i];
+            TryToFillCell((int)pos.x, (int)pos.y);
+        }
+        return true;
+    }
+
+    public static bool IsCellsAvailable(List<Vector2> positions)
+    {
+        for (int i = 0; i < positions.Count; i++)
+        {
+            var pos = positions[i];
+            if (!IsCellAvailable((int)pos.x, (int)pos.y))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 }

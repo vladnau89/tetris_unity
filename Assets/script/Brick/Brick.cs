@@ -8,7 +8,7 @@ public class Brick : MonoBehaviour
     public int PositionX
     {
         get { return (int)this.transform.localPosition.x; }
-        set
+        private set
         {
             var position = this.transform.localPosition;
             position.x = value;
@@ -19,7 +19,7 @@ public class Brick : MonoBehaviour
     public int PositionY
     {
         get { return (int)this.transform.localPosition.y; }
-        set
+        private set
         {
             var position = this.transform.localPosition;
             position.y = value;
@@ -52,6 +52,36 @@ public class Brick : MonoBehaviour
             bricks[i].SetActive(active);
         }
     }
+
+    public bool TryMove(int x, int y)
+    {
+        int dx = x - PositionX;
+        int dy = y - PositionY;
+
+        List<Vector2> newPartPositions = new List<Vector2>();
+
+        for (int i = 0; i < bricks.Length; i++)
+        {
+            var brick = bricks[i];
+            if (brick.activeSelf)
+            {
+                Vector2 partPosition = brick.transform.position;
+                partPosition.x += dx;
+                partPosition.y += dy;
+                newPartPositions.Add(partPosition);
+            }
+        }
+
+        if (CellMatrix.IsCellsAvailable(newPartPositions))
+        {
+            PositionX = x;
+            PositionY = y;
+            return true;
+        }
+
+        return false;
+    }
+
 
     [ContextMenu("Rotate")]
     public void Rotate()

@@ -27,23 +27,31 @@ public class BrickMovementController : MonoBehaviour {
     {
         if (direction == MoveDirection.Left || direction == MoveDirection.Right)
         {
-            int posX = GamePlay.CurrentBrick.PositionX;
-            posX += direction == MoveDirection.Left ? -1 : +1;
-            GamePlay.CurrentBrick.PositionX = Mathf.Clamp(posX, 0, CellMatrix.Width);
+            int dx = direction == MoveDirection.Left ? -1 : +1;
+            int dy = 0;
+
+            TryMoveBrick(dx, dy);
         }
         else if (direction == MoveDirection.Down)
         {
-            int posY = GamePlay.CurrentBrick.PositionY;
-            posY -= 1;
+            int dx = 0;
+            int dy = -1;
 
-            GamePlay.CurrentBrick.PositionY = Mathf.Clamp(posY, -CellMatrix.Height, 0);
+            TryMoveBrick(dx, dy);
         }
         else if (direction == MoveDirection.Up)
         {
             GamePlay.CurrentBrick.Rotate();
         }
-
     }
 
+
+    private static void TryMoveBrick(int dx, int dy)
+    {
+        int posX = GamePlay.CurrentBrick.PositionX;
+        int posY = GamePlay.CurrentBrick.PositionY;
+
+        GamePlay.CurrentBrick.TryMove(posX + dx, posY + dy);
+    }
 
 }
