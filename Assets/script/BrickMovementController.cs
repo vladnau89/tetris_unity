@@ -3,7 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BrickMovementController : MonoBehaviour {
+public class BrickMovementController : MonoBehaviour
+{
+    [SerializeField] private float _gravityPerSeconds = 10;
+
+    float _prevtime;
+
+    private void Update()
+    {
+        if (GamePlay.CurrentState != GamePlay.State.Playing) return;
+
+        var brick = GamePlay.CurrentBrick;
+        if (brick != null)
+        {
+            var time = Time.unscaledTime;
+            if (time > _prevtime + 1 / _gravityPerSeconds)
+            {
+                _prevtime = time;
+                MoveBrick(MoveDirection.Down);
+            }
+            
+
+        }
+
+    }
 
     private void OnEnable()
     {
