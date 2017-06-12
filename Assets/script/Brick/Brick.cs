@@ -29,19 +29,32 @@ public class Brick : MonoBehaviour
     
     [SerializeField] private GameObject[] bricks = new GameObject[16];
 
-    private BrickSettings _settings;
-    private int _maskIndex;
+    private BrickSettings   _settings;
+    private int             _maskIndex;
+    private Material        _material;
 
-    public void Apply(BrickSettings settings, int maskIndex)
+    public void Apply(BrickSettings settings, int maskIndex, Material material)
     {
-        _settings = settings;
-        _maskIndex = maskIndex;
+        _settings   = settings;
+        _maskIndex  = maskIndex;
+        _material   = material;
+
+        ApplyMaterial(material);
 
         ushort mask = settings.rotationMasks[maskIndex];
 
         Repaint(mask);
 
         base.name = settings.name;
+    }
+
+    private void ApplyMaterial(Material material)
+    {
+        for (int i = 0; i < bricks.Length; i++)
+        {
+            var brick = bricks[i];
+            brick.GetComponent<Renderer>().sharedMaterial = material;
+        }
     }
 
     private void Repaint(ushort mask)
@@ -66,6 +79,20 @@ public class Brick : MonoBehaviour
         int y = PositionY;
         bool rotate = true;
         return TryTranslate(x, y, rotate);
+    }
+
+    public void FixBrick()
+    {
+        List<GameObject> activeBricks = new List<GameObject>();
+        for (int i = 0; i < bricks.Length; i++)
+        {
+            if (bricks[i].activeSelf)
+            {
+                activeBricks.Add(bricks[i]);
+            }
+        }
+
+        CellMatrix.FixCell(GetCurrentBricksPosition(), activeBricks);
     }
 
     private bool TryTranslate(int x, int y, bool rotate)
@@ -94,6 +121,13 @@ public class Brick : MonoBehaviour
         return false;
     }
 
+    private List<Vector2> GetCurrentBricksPosition()
+    {
+        ushort mask = _settings.rotationMasks[_maskIndex];
+        int dx = 0;
+        int dy = 0;
+        return GetNewBricksPosition(mask, dx, dy);
+    }
 
     private List<Vector2> GetNewBricksPosition(ushort maskNext, int dx, int dy)
     {
@@ -124,7 +158,11 @@ public class Brick : MonoBehaviour
     {
         for (int i = 0; i < bricks.Length; i++)
         {
-            Gizmos.DrawWireCube(bricks[i].GetComponent<Renderer>().bounds.center, bricks[i].transform.localScale);
+            var brick = bricks[i];
+            if (brick != null)
+            {
+                Gizmos.DrawWireCube(brick.GetComponent<Renderer>().bounds.center, brick.transform.localScale);
+            }         
         }
     }
 

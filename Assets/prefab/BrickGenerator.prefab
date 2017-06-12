@@ -63,7 +63,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1098933292017184}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 0.5, z: 0}
+  m_LocalPosition: {x: -2, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4699334805126220}
@@ -89,5 +89,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a94a364679ecbdc44989ff85dd803bbb, type: 2}
   - {fileID: 11400000, guid: 0b850b75a1179a24bb382d07bfffcac2, type: 2}
   - {fileID: 11400000, guid: 70b64f8987a1e074f9b9bfecd2abd15e, type: 2}
+  brickMaterials:
+  - {fileID: 2100000, guid: d01cd51d947c4364da3fcda64aab8cca, type: 2}
+  - {fileID: 2100000, guid: b8f7ef97f348cf84692c7003cae970f3, type: 2}
+  - {fileID: 2100000, guid: ebf3de742d25415438fd2da591f8bd95, type: 2}
+  - {fileID: 2100000, guid: 483d70e7924c56f4dad22f00c3726c2f, type: 2}
+  - {fileID: 2100000, guid: cfdc310a1e0d3aa4a8cae645fab167f9, type: 2}
+  - {fileID: 2100000, guid: a59d42791b63d3b439d88ae2f0f3250f, type: 2}
+  - {fileID: 2100000, guid: 2a8f41b454c3ead4583faaacd4ab34d1, type: 2}
+  - {fileID: 2100000, guid: aff2f37e839b3a14aaea5dd48a6349e4, type: 2}
   brickPrefab: {fileID: 114806594784661834, guid: 1968be694e800ad42bb923e7f6a134c6,
     type: 2}

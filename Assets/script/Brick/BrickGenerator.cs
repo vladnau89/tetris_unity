@@ -6,6 +6,7 @@ public class BrickGenerator : SingletonMonoBehaviour<BrickGenerator>
 {
     [SerializeField] private Transform          pivot;
     [SerializeField] private BrickSettings[]    brickSettings;
+    [SerializeField] private Material[]         brickMaterials;
     [SerializeField] private Brick              brickPrefab;
 
 
@@ -25,7 +26,8 @@ public class BrickGenerator : SingletonMonoBehaviour<BrickGenerator>
 
         BrickSettings settings = GetRandomBrickSetting();
         int indexMask = RandomRotationMaskIndex(settings);
-        brick.Apply(settings, indexMask);
+        Material material = GetRandomMaterial();
+        brick.Apply(settings, indexMask, material);
 
         return brick;
     }
@@ -45,5 +47,10 @@ public class BrickGenerator : SingletonMonoBehaviour<BrickGenerator>
         return brickSettings[UnityEngine.Random.Range(0, brickSettings.Length)];
     }
 
+
+    private Material GetRandomMaterial()
+    {
+        return brickMaterials[UnityEngine.Random.Range(0, brickMaterials.Length)];
+    }
 
 }
