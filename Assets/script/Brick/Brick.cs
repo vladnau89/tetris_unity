@@ -86,9 +86,14 @@ public class Brick : MonoBehaviour
         List<GameObject> activeBricks = new List<GameObject>();
         for (int i = 0; i < bricks.Length; i++)
         {
-            if (bricks[i].activeSelf)
+            var brick = bricks[i];
+            if (brick.activeSelf)
             {
-                activeBricks.Add(bricks[i]);
+                activeBricks.Add(brick);
+            }
+            else
+            {
+                Destroy(brick);
             }
         }
 
