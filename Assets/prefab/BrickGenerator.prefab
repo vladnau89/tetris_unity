@@ -96,7 +96,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 483d70e7924c56f4dad22f00c3726c2f, type: 2}
   - {fileID: 2100000, guid: cfdc310a1e0d3aa4a8cae645fab167f9, type: 2}
   - {fileID: 2100000, guid: a59d42791b63d3b439d88ae2f0f3250f, type: 2}
-  - {fileID: 2100000, guid: 2a8f41b454c3ead4583faaacd4ab34d1, type: 2}
   - {fileID: 2100000, guid: aff2f37e839b3a14aaea5dd48a6349e4, type: 2}
   brickPrefab: {fileID: 114806594784661834, guid: 1968be694e800ad42bb923e7f6a134c6,
     type: 2}
