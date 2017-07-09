@@ -9,6 +9,19 @@ public class GeneratorManager : MonoBehaviour
     [SerializeField] private int _width = 1024;
     [SerializeField] private int _height = 1024;
 
+    public Texture aTexture;
+
+
+    private void OnPostRender()
+    {
+        GL.PushMatrix();
+        GL.LoadPixelMatrix(0, Screen.width, Screen.height, 0);
+        Graphics.DrawTexture(
+            new Rect(0, 0, Screen.width, Screen.height),
+            aTexture);
+        GL.PopMatrix();
+    }
+
     [ContextMenu("Generate")]
     void Generate()
     {
@@ -34,7 +47,7 @@ public class GeneratorManager : MonoBehaviour
         File.WriteAllBytes(path, bytes);
 
 
-        Debug.LogError("OK!");
+        Debug.LogError("OK");
 
     }
 
