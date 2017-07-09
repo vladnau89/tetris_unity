@@ -1,5 +1,3 @@
-- сделать Settings
-- сделать нормальные повороты, если рядом со стеной  https://tetris.wiki/Wall_kick
 - когда зажимаешь вниз , то быстрее фиксировать кирпич на дне https://tetris.wiki/Drop#Hard_drop
 - поменять систему рендомных кирпичей https://tetris.wiki/Random_Generator
 - scoring system https://tetris.wiki/Scoring

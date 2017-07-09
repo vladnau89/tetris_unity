@@ -78,36 +78,32 @@ public class Brick : MonoBehaviour
         int x = PositionX;
         int y = PositionY;
         bool rotate = true;
-
         bool success = TryTranslate(x, y, rotate);
         if (!success && wallKick)   // apply wall kick algorithm
         {
-            success = TryRotateWithWallKick(x, y);
+            success = TryRotateWithWallKick(x, y, true);
         }
         return success;
     }
 
-    private bool TryRotateWithWallKick(int x, int y)
+    private bool TryRotateWithWallKick(int x, int y, bool checkI)
     {
         bool rotate = true;
         bool success = false;
-        int newX = NewPositionForWallKick(x);
-        if (newX != x)
+        int newX = NewPositionForWallKickX(x);
+        int newY = NewPositionForWallKickY(y);
+        if (newX != x || newY != y)
         {
-            success = TryTranslate(newX, y, rotate);
-            if (!success && _settings.isI)  // for I brick add aditional offset
+            success = TryTranslate(newX, newY, rotate);
+            if (!success && _settings.isI && checkI)  // for I brick add aditional offset
             {
-                int newX1 = NewPositionForWallKick(newX);
-                if (newX1 != newX)
-                {
-                    success = TryTranslate(newX1, y, rotate);
-                }
+                return TryRotateWithWallKick(newX, newY, false);
             }
         }
         return success;
     }
 
-    private int NewPositionForWallKick(int x)
+    private int NewPositionForWallKickX(int x)
     {
         int newX = x;
         if (IsLeftWall(newX)) // left wall
@@ -121,14 +117,30 @@ public class Brick : MonoBehaviour
         return newX;
     }
 
-    private bool IsRightWall(int newX)
+
+    private int NewPositionForWallKickY(int y)
     {
-        return newX == CellMatrix.Width - 1 || (_settings.isI && newX == CellMatrix.Width - 2);
+        int newY = y;
+        if (IsRoof(y)) // left wall
+        {
+            newY--; // one position down
+        }
+        return newY;
     }
 
-    private bool IsLeftWall(int newX)
+    private bool IsRightWall(int x)
     {
-        return newX == 0 || (_settings.isI && newX == 1);
+        return x == CellMatrix.Width - 1 || (_settings.isI && x == CellMatrix.Width - 2);
+    }
+
+    private bool IsLeftWall(int x)
+    {
+        return x == 0 || (_settings.isI && x == 1);
+    }
+
+    private bool IsRoof(int y)
+    {
+        return y == 0 || y == -1 || (_settings.isI && y == -2);
     }
 
     public void FixBrick()
