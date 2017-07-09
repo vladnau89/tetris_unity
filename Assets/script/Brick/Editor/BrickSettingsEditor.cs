@@ -13,8 +13,7 @@ public class BrickSettingsEditor : Editor
 
         int length = 4;
 
-        //DrawRotationMatrix("Rotation state 1", ref brickSettings.pos1, length);
-        //GUILayout.Space(23);
+        brickSettings.isI = EditorGUILayout.Toggle("is I ?", brickSettings.isI);
 
         for (int i = 0; i < brickSettings.rotationMasks.Length; i++)
         {
@@ -24,11 +23,7 @@ public class BrickSettingsEditor : Editor
             GUILayout.Space(10);
         }
 
-
-
         EditorUtility.SetDirty(target);
-
-
     }
 
 
@@ -39,8 +34,7 @@ public class BrickSettingsEditor : Editor
         for (int j = 0; j < length; j++)
         {
             DrawRaw(ref rotationMask, length, j);
-        }
-      
+        }      
     }
 
 

@@ -11,4 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e1f6b2a527bf2849aafb483a3b3eb26, type: 3}
   m_Name: I
   m_EditorClassIdentifier: 
+  isI: 1
   rotationMasks: 000f4444000f4444

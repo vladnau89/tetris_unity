@@ -72,13 +72,63 @@ public class Brick : MonoBehaviour
         return TryTranslate(x, y, rotate);
     }
 
-    public bool TryRotate()
+    public bool TryRotate(bool wallKick)
     {
         // don`t change position
         int x = PositionX;
         int y = PositionY;
         bool rotate = true;
-        return TryTranslate(x, y, rotate);
+
+        bool success = TryTranslate(x, y, rotate);
+        if (!success && wallKick)   // apply wall kick algorithm
+        {
+            success = TryRotateWithWallKick(x, y);
+        }
+        return success;
+    }
+
+    private bool TryRotateWithWallKick(int x, int y)
+    {
+        bool rotate = true;
+        bool success = false;
+        int newX = NewPositionForWallKick(x);
+        if (newX != x)
+        {
+            success = TryTranslate(newX, y, rotate);
+            if (!success && _settings.isI)  // for I brick add aditional offset
+            {
+                int newX1 = NewPositionForWallKick(newX);
+                if (newX1 != newX)
+                {
+                    success = TryTranslate(newX1, y, rotate);
+                }
+            }
+        }
+        return success;
+    }
+
+    private int NewPositionForWallKick(int x)
+    {
+        int newX = x;
+        if (IsLeftWall(newX)) // left wall
+        {
+            newX++; // one position to right
+        }
+        else if (IsRightWall(newX))  //right wall
+        {
+            newX--; // one position to left               
+        }
+        return newX;
+    }
+
+    private bool IsRightWall(int newX)
+    {
+        return newX == CellMatrix.Width - 1 || (_settings.isI && newX == CellMatrix.Width - 2);
+    }
+
+    private bool IsLeftWall(int newX)
+    {
+        return newX == 0 || (_settings.isI && newX == 1);
     }
 
     public void FixBrick()

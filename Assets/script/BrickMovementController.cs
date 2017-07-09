@@ -30,11 +30,8 @@ public class BrickMovementController : MonoBehaviour
                 {
                     GamePlay.FixBrick(brick);
                 }
-            }
-            
-
+            }          
         }
-
     }
 
     private void OnEnable()
@@ -73,7 +70,7 @@ public class BrickMovementController : MonoBehaviour
         }
         else if (direction == MoveDirection.Up)
         {
-            return GamePlay.CurrentBrick.TryRotate();
+            return GamePlay.CurrentBrick.TryRotate(Settings.WallKick);
         }
 
         return false;

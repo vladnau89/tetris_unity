@@ -7,6 +7,7 @@ public class BrickSettings : ScriptableObject
 {
     const int ROTATIONS_COUNT = 4;
 
+    public bool isI = false;
     public ushort[] rotationMasks = new ushort[ROTATIONS_COUNT];
 
 }
